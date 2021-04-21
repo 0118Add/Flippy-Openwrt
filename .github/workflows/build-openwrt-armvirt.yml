@@ -167,10 +167,17 @@ jobs:
         body: |
           This is OpenWrt firmware for Armvirt 64
           * Firmware information
-          Default IP: 192.168.1.1
-          Default username: root
-          Default password: password
-          Default WIFI name: OpenWrt
-          Default WIFI password: none
-          Install command: cd /root && chmod +x install*.sh && ./install*.sh
+          N1 U盘写入刷emmc：
+          1.下载对应版本固件
+          2.将固件写入U盘或TF卡
+          3.插入U盘启动盒子，输入192.168.1.1进入后台
+          4.在系统——TTYD终端——输入用户名root；密码password
+          5.输入安装命令 ./install-to-emmc.sh
+          6.如果显示挂载失败，重新执行上述安装命令./install-to-emmc.sh
+          
+          升级降级方法为：
+          1. 把 update-amlogic-openwrt.sh 及 img镜像上传至 /mnt/mmcblk2p4
+          2. cd /mnt/mmcblk2p4
+          3. chmod 755 update-amlogic-openwrt.sh
+          4. ./update-amlogic-openwrt.sh xxxxx.img
 
