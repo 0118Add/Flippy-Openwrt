@@ -63,6 +63,7 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-ap
 #git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
 git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+svn co https://github.com/ophub/amlogic-s9xxx-openwrt/trunk/amlogic-s9xxx/install-program package/install-program
 #rm -rf package/lean/v2ray-plugin
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/v2ray-plugin package/v2ray-plugin
 svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
