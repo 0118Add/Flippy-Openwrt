@@ -42,3 +42,29 @@ sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci
 # ==========luci-theme-url==========
 # svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-theme-bootstrap-mod package/luci-theme-bootstrap-mod
 
+# 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
+sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
+
+#使用源码自带ShadowSocksR Plus+出国软件
+#sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+
+#添加额外软件包
+rm -rf package/lean/luci-app-dockerman
+git clone https://github.com/lisaac/luci-app-dockerman.git package/lean/luci-app-dockerman
+git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
+git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
+git clone https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
+git clone https://github.com/vernesong/OpenClash.git package/luci-app-openclash
+git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
+rm -rf package/lean/luci-theme-argon
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+#svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
+#git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
+git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
+git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+#rm -rf package/lean/v2ray-plugin
+#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/v2ray-plugin package/v2ray-plugin
+svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
+#svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-gost package/lean/luci-app-gost
+#svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gost package/lean/gost
