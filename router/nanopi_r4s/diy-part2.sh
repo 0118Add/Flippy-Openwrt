@@ -38,8 +38,8 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 rm -rf package/lean/luci-theme-argon
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/lean/luci-theme-argon
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
-svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
-git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
+#svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
+#git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
 git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #rm -rf package/lean/v2ray
@@ -49,5 +49,5 @@ svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gost package/lean/gost
 
 #修改bypass的makefile
-find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
-find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
+#find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
+#find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
