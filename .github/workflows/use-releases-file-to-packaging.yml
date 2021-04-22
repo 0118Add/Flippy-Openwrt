@@ -5,7 +5,7 @@
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
 
-name: Use Releases Armvirt file to Packaging
+name: Use Releases file to Packaging
 
 on:
   repository_dispatch:
@@ -47,8 +47,6 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
         ARR_BRANCH=("ophub" "flippy")
         if  [[ -n "${{ github.event.inputs.packagerepo }}" && -n "$(echo "${ARR_BRANCH[@]}" | grep -w "${{ github.event.inputs.packagerepo }}")" ]]; then
             PACKAGE_OP_SCRIPT=${{ github.event.inputs.packagerepo }}
@@ -63,18 +61,14 @@ jobs:
         fi
         echo "RELEASES_BRANCH=${RELEASES_BRANCH}" >> $GITHUB_ENV
         echo "COMPILE_STARTINGTIME=$(date +"%Y.%m.%d.%H%M")" >> $GITHUB_ENV
-
     - name: Download armvirt file
       id: download
       run: |
         armvirt_tarfile_path="openwrt/bin/targets/armvirt/64"
         [ -d "${armvirt_tarfile_path}" ] || mkdir -p ${armvirt_tarfile_path}
-        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "openwrt_${{ env.RELEASES_BRANCH }}_.*/openwrt-armvirt-.*\.tar.gz" | head -n 1 > DOWNLOAD_URL
         [ -s DOWNLOAD_URL ] && wget -q -P ${armvirt_tarfile_path} https://github.com/${GITHUB_REPOSITORY}/releases/download/$(cat DOWNLOAD_URL)
-
         echo "::set-output name=status::success"
-
     - name: SSH connection to Actions @ Ctrl+C to enter, Ctrl+D to exit
       uses: P3TERX/ssh2actions@main
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
@@ -98,7 +92,6 @@ jobs:
         echo "PACKAGED_OUTPUTPATH=${PWD}" >> $GITHUB_ENV
         echo "PACKAGED_OUTPUTDATE=$(date +"%Y.%m.%d.%H%M")" >> $GITHUB_ENV
         echo "PACKAGED_STATUS=success" >> $GITHUB_ENV
-
     - name: Packaged OpenWrt use Flippy script
       uses: ophub/flippy-openwrt-actions@main
       if: env.PACKAGE_OP_SCRIPT == 'flippy' && !cancelled()
@@ -125,10 +118,10 @@ jobs:
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*
         body: |
           This is OpenWrt firmware for Armvirt 64
-          * Firmware information
-          Default IP: 192.168.1.1
-          Default username: root
-          Default password: password
-          Default WIFI name: OpenWrt
-          Default WIFI password: none
-
+          N1 U盘写入刷emmc：
+          1.下载对应版本固件
+          2.将固件写入U盘或TF卡
+          3.插入U盘启动盒子，输入192.168.1.1进入后台
+          4.在系统——TTYD终端——输入用户名root；密码password
+          5.输入安装命令 ./install-to-emmc.sh
+          6.如果显示挂载失败，重新执行上述安装命令./install-to-emmc.sh
