@@ -166,8 +166,8 @@ jobs:
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*
         body: |
           This is OpenWrt firmware for Armvirt 64
-          * Firmware information
           N1 U盘写入刷emmc：
+           
           1.下载对应版本固件
           2.将固件写入U盘或TF卡
           3.插入U盘启动盒子，输入192.168.1.1进入后台
