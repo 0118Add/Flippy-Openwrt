@@ -163,7 +163,6 @@ jobs:
         tag_name: openwrt_armvirt_${{ env.PACKAGED_OUTPUTDATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*
         body: |
-          This is OpenWrt firmware for Armvirt 64
           N1 U盘写入刷emmc：
            
           1.下载对应版本固件
