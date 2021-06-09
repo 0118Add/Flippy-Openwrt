@@ -15,19 +15,19 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  #schedule:
-    #- cron: '0 17 * * *'
+  schedule:
+    - cron: '0 17 * * *'
 
 env:
-  REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: openwrt-21.02
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
   FEEDS_CONF: router/amlogic_s9xxx/feeds.conf.default
   CONFIG_FILE: router/amlogic_s9xxx/.config
   DIY_P1_SH: router/amlogic_s9xxx/diy-part1.sh
   DIY_P2_SH: router/amlogic_s9xxx/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_ARMVIRT: false
-  UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
@@ -137,12 +137,12 @@ jobs:
         if-no-files-found: ignore
 
     - name: Package Armvirt as OpenWrt
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && !cancelled()
       uses: ophub/amlogic-s9xxx-openwrt@main
       with:
         armvirt64_path: openwrt/bin/targets/*/*/*.tar.gz
         amlogic_openwrt: s905x3_s905x2_s905x_s905d_s922x_s912
-        amlogic_kernel: 5.10.31.TF_5.4.113
+        amlogic_kernel: 5.12.9_5.4.124
         amlogic_size: 1024
 
     - name: Upload artifact to Actions
@@ -169,7 +169,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: openwrt_s9xxx_${{ env.PACKAGED_OUTPUTDATE }}
+        tag_name: openwrt_s9xxx_lede_${{ env.PACKAGED_OUTPUTDATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*
         body: |
           This is OpenWrt firmware for Amlogic S9xxx STB
