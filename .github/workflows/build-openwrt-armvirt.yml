@@ -15,8 +15,8 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  #schedule:
-    #- cron: '0 17 * * *'
+  schedule:
+    - cron: '0 17 * * *'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -27,7 +27,7 @@ env:
   DIY_P2_SH: router/armvirt_64/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_ARMVIRT: false
-  UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
   RECENT_LASTEST: 3
   TZ: Asia/Shanghai
@@ -54,21 +54,18 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
         echo "COMPILE_STARTINGTIME=$(date +"%Y.%m.%d.%H%M")" >> $GITHUB_ENV
-    
     - name: Clone source code
       working-directory: /workdir
       run: |
         df -hT $PWD
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-    
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
-    
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
@@ -82,7 +79,6 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-    
     - name: Download package
       id: package
       run: |
@@ -91,7 +87,6 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-    
     - name: SSH connection to Actions @ Ctrl+C to enter, Ctrl+D to exit
       uses: P3TERX/ssh2actions@main
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
@@ -109,7 +104,6 @@ jobs:
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d.%H%M")" >> $GITHUB_ENV
         echo "::set-output name=status::success"
-    
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
@@ -131,7 +125,6 @@ jobs:
         rm -rf packages
         echo "TMPFILEPATH=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
-    
     - name: Upload armvirt directory to Actions
       uses: actions/upload-artifact@v2
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_ARMVIRT == 'true' && !cancelled()
@@ -142,11 +135,12 @@ jobs:
         if-no-files-found: ignore
 
     - name: Package Armvirt as OpenWrt
+      if: steps.compile.outputs.status == 'success' && !cancelled()
       uses: ophub/flippy-openwrt-actions@main
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*.tar.gz
         PACKAGE_SOC: s905d_s905x3_vplus_beikeyun_l1pro
-        KERNEL_VERSION_NAME: 5.12.8.TF_5.4.123
+        KERNEL_VERSION_NAME: 5.12.9_5.4.124
 
     - name: Upload artifact to Actions
       uses: kittaakos/upload-artifact-as-is@master
@@ -177,4 +171,3 @@ jobs:
           2. cd /mnt/mmcblk2p4
           3. chmod 755 update-amlogic-openwrt.sh
           4. ./update-amlogic-openwrt.sh xxxxx.img
-
