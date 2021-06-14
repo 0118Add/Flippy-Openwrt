@@ -52,8 +52,8 @@ sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci
 
 #添加额外软件包
 #rm -rf package/lean/luci-app-dockerman
-#git clone https://github.com/lisaac/luci-app-dockerman.git package/lean/luci-app-dockerman
-git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
+git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+#git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
 git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
 git clone https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
