@@ -143,7 +143,7 @@ jobs:
 
     - name: Package Armvirt as OpenWrt
       if: steps.compile.outputs.status == 'success' && !cancelled()
-      uses: ophub/flippy-openwrt-actions@main
+      uses: 0118Add/flippy-openwrt-actions@main
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*.tar.gz
         PACKAGE_SOC: vplus_beikeyun_l1pro_s905d_s905x3_s922x
