@@ -81,7 +81,7 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 #git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
 #git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 #git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
-git clone https://github.com/tuanqing/install-program.git package/install-program
+#git clone https://github.com/tuanqing/install-program.git package/install-program
 #svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-gost package/lean/luci-app-gost
