@@ -174,8 +174,3 @@ jobs:
           5.输入安装命令 ./install-to-emmc.sh
           6.如果显示挂载失败，重新执行上述安装命令./install-to-emmc.sh
           
-          升级降级方法为：
-          1. 把 update-amlogic-openwrt.sh 及 img镜像上传至 /mnt/mmcblk2p4
-          2. cd /mnt/mmcblk2p4
-          3. chmod 755 update-amlogic-openwrt.sh
-          4. ./update-amlogic-openwrt.sh xxxxx.img
