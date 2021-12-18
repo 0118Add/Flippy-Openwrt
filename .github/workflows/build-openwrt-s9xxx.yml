@@ -148,8 +148,8 @@ jobs:
       uses: ophub/amlogic-s9xxx-openwrt@main
       with:
         armvirt64_path: openwrt/bin/targets/*/*/*.tar.gz
-        amlogic_openwrt: s905x3_s905x2_s905x_s905d_s922x_s912
-        amlogic_kernel: 5.13.14_5.4.126_5.14.1
+        amlogic_openwrt: s905x3_s905x2_s905x_s905d
+        amlogic_kernel: 5.10.80_5.4.126_5.15.1
         auto_kernel: true
         amlogic_size: 1024
 
