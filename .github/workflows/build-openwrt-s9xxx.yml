@@ -22,7 +22,7 @@ env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-18.06-k5.4
   FEEDS_CONF: router/amlogic_s9xxx/feeds.conf.default
-  CONFIG_FILE: router/amlogic_s9xxx/.config
+  CONFIG_FILE: router/amlogic_s9xxx/ceshi.config
   DIY_P1_SH: router/amlogic_s9xxx/diy-part1.sh
   DIY_P2_SH: router/amlogic_s9xxx/diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -149,7 +149,7 @@ jobs:
       with:
         armvirt64_path: openwrt/bin/targets/*/*/*.tar.gz
         amlogic_openwrt: s905x3_s905x2_s905x_s905d
-        amlogic_kernel: 5.10.80_5.4.126_5.15.1
+        amlogic_kernel: 5.10.80_5.4.126_5.15.1_5.16.3
         auto_kernel: true
         amlogic_size: 1024
 
