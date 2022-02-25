@@ -37,6 +37,13 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 #sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
 
+# 修改系统文件
+curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
+curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/n1_index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+
+# 更新固件编译日期
+sed -i "s/2022.02.02/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+
 # 添加旁路由防火墙
 echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/config/firewall/files/firewall.user
 
@@ -59,8 +66,8 @@ sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.default
 
 #添加额外软件包
-rm -rf package/lean/luci-lib-docker
-rm -rf package/lean/luci-app-dockerman
+rm -rf package/luci/applications/luci-lib-docker
+rm -rf package/luci/applications/luci-app-dockerman
 git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
@@ -94,7 +101,7 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-ap
 #svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
 #git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 #git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
-git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
+git clone https://github.com/0118Add/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 #git clone https://github.com/small-5/luci-app-adblock-plus.git package/luci-app-adblock-plus
 #git clone https://github.com/kuoruan/openwrt-upx package/openwrt-upx
 #svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
